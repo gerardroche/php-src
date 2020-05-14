@@ -9,3 +9,6 @@ steps:
       echo opcache.enable_cli=1 >> /etc/php.d/opcache.ini
       echo opcache.protect_memory=1 >> /etc/php.d/opcache.ini
     displayName: 'Install Build'
+  - script: |
+      sudo locale-gen de_DE en_US fi_FI fr_FR fr_FR@euro is_IS it_IT pt_PT ru_RU.KOI8-R sv_SE
+    displayName: 'Install Locales'

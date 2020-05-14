@@ -14,6 +14,7 @@ Gettext basic test
 
 chdir(__DIR__);
 putenv('LC_ALL=fi_FI');
+putenv('LANGUAGE=fi_FI');
 setlocale(LC_ALL, 'fi_FI');
 bindtextdomain ("messages", "./locale");
 textdomain ("messages");

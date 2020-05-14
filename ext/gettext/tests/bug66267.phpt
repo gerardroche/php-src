@@ -28,6 +28,7 @@ $loc = ["de_DE", "fr_FR", "en_US"];
 
 foreach ($loc as $l) {
     putenv("LC_ALL=$l");
+    putenv("LANGUAGE=$l");
     setlocale(LC_ALL, $l);
 
     $path = realpath(__DIR__ . DIRECTORY_SEPARATOR . "66265");
