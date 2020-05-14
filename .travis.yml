@@ -78,7 +78,7 @@ jobs:
           arch: s390x
 
 before_install:
-    - sudo locale-gen de_DE fi_FI fr_FR is_IS it_IT ru_RU.KOI8-R sv_SE
+    - sudo locale-gen de_DE en_US fi_FI fr_FR hr_HR is_IS it_IT pt_PT ru_RU.KOI8-R sv_SE
 
 before_script:
     - ccache --version
