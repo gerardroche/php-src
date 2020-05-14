@@ -14,7 +14,7 @@ if (substr(PHP_OS, 0, 3) != 'WIN') {
 	$loc = ["de_DE", "fr_FR", "en_US"];
 	foreach($loc as $l) {
 		if (!setlocale(LC_ALL, $l)) {
-			die("SKIP '$l' locale not supported.");
+			die("skip requires locale '$l'\n");
 		}
 	}
 }
@@ -28,6 +28,7 @@ $loc = ["de_DE", "fr_FR", "en_US"];
 
 foreach ($loc as $l) {
     putenv("LC_ALL=$l");
+    putenv("LANGUAGE=$l");
     setlocale(LC_ALL, $l);
 
     $path = realpath(__DIR__ . DIRECTORY_SEPARATOR . "66265");

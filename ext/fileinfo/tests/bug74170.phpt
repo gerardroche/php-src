@@ -7,7 +7,7 @@ if (!class_exists('finfo'))
 if (!extension_loaded('intl'))
 	die('skip intl extension not enabled');
 if (setlocale(LC_CTYPE, 'ru_RU.koi8r') === false)
-	die('skip ru_RU.koi8r locale is not available');
+	die('skip requires locale ru_RU.koi8r');
 ?>
 --FILE--
 <?php

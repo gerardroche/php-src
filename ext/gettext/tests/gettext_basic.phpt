@@ -6,7 +6,7 @@ Gettext basic test
 		die("skip\n");
 	}
 	if (!setlocale(LC_ALL, 'fi_FI')) {
-		die("skip fi_FI locale not supported.");
+		die("skip requies locale 'fi_FI'");
 	}
 ?>
 --FILE--

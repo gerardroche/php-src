@@ -6,7 +6,7 @@ Gettext basic test with en_US locale that should be on nearly every system
 		die("skip\n");
 	}
 	if (!setlocale(LC_ALL, 'en_US.UTF-8')) {
-		die("skip en_US.UTF-8 locale not supported.");
+		die("skip requires locale en_US.UTF-8");
 	}
 ?>
 --FILE--

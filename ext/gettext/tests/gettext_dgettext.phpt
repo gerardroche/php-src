@@ -6,7 +6,7 @@ if (!extension_loaded("gettext")) {
     die("SKIP gettext extension is not loaded.\n");
 }
 if (!setlocale(LC_ALL, 'en_US.UTF-8')) {
-    die("SKIP en_US.UTF-8 locale not supported.");
+    die("SKIP requires locale 'en_US.UTF-8'");
 }
 --FILE--
 <?php

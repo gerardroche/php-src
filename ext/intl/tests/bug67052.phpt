@@ -8,7 +8,7 @@ if (substr(PHP_OS, 0, 3) == 'WIN') {
 }
 $l = setlocale(LC_ALL, 'de_DE');
 if($l === false) {
-  die("skip de_DE locale not installed");
+  die("skip requires locale 'de_DE'");
 }
 setlocale(LC_ALL, $l);
 ?>
