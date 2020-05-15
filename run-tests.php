@@ -2215,14 +2215,19 @@ TEST $file
                         $excl_reasons[] = 'valid only on windows';
                         $excl_reasons[] = 'windows platforms only';
                         $excl_reasons[] = 'windows only test';
+                        $excl_reasons[] = 'for windows';
                         $excl_reasons[] = 'windows only';
                     }
+
+                    // only valid for sun solaris
 
                     if (PHP_INT_SIZE == 8) {
                         $excl_reasons[] = '32 bit only';
                         $excl_reasons[] = '32-bit only';
                         $excl_reasons[] = '32-bit platforms only';
+                        $excl_reasons[] = 'system with 32-bit';
                         $excl_reasons[] = '32bit windows';
+                        $excl_reasons[] = '32bit test only';
                         $excl_reasons[] = '32bit only';
                         $excl_reasons[] = '32bit platform';
                         $excl_reasons[] = 'machines with 32-bit longs';
