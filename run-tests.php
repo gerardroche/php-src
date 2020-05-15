@@ -1757,9 +1757,9 @@ function show_file_block($file, $block, $section = null)
             $section = strtoupper($file);
         }
 
-        echo "\n========" . $section . "========\n";
-        echo rtrim($block);
-        echo "\n========DONE========\n";
+        // echo "\n========" . $section . "========\n";
+        // echo rtrim($block);
+        // echo "\n========DONE========\n";
     }
 }
 
@@ -2163,7 +2163,88 @@ TEST $file
 
             if (!strncasecmp('skip', $output, 4)) {
                 if (preg_match('/^skip\s*(.+)/i', $output, $m)) {
-                    show_result('SKIP', $tested, $tested_file, "reason: $m[1]", $temp_filenames);
+                    $skip_reason = $m[1];
+
+                    // Displaying that a test was skipped in some environments
+                    // seems to me to be mostly useless. For example displaying
+                    // a message that a test skipped on linux because it's only
+                    // for windows doesn't seem to have any value, at least to
+                    // me. In fact those kind of messages can create so much
+                    // noise that they instill ignorance about skipped tests
+                    // making the messages a negative.
+
+                    // A possible solution is to allow ignoring obviously
+                    // redundant skipped test messages.
+
+                    // The skip messages are enabled via the -g option, so
+                    // possible options could be:
+                    //      --group-ignore-impossible (impossible meaning you
+                    //                                 couldn't run the test
+                    //                                 even if you tried; for
+                    //                                 example a windows only
+                    //                                 test could never be run
+                    //                                 on a linux system)
+                    //      --group-ignore-irrelevant
+                    //      --group-ignore-redundant
+                    //      --group-ignore-skip=os,bit (comma,delimited,exclusion-types)
+                    //      --group-ignore-skip-os-only (ignore windows only on linux, etc)
+                    //      --group-ignore-skip-bit-only (ignore 32bit only on 64bit, etc)
+
+                    // Some tests are skipped because of failures, for example
+                    // if a mysql test can't test it is skipped. A better way to
+                    // handle this I think would be to fail if credentials are
+                    // given because if credentials are given then the intent is
+                    // that they run or fail, not skip.
+
+                    // --- this is hacky temporary dev solution ---
+
+                    $show_skip_result = true;
+
+                    $excl_reasons = [];
+
+                    if (PHP_OS == 'Linux') {
+                        $excl_reasons[] = 'for windows platforms';
+                        $excl_reasons[] = 'not valid for linux'; // implies can run on everything else
+                        $excl_reasons[] = 'only for windows';
+                        $excl_reasons[] = 'only on windows';
+                        $excl_reasons[] = 'only run on windows';
+                        $excl_reasons[] = 'only valid for windows';
+                        $excl_reasons[] = 'only valid on windows';
+                        $excl_reasons[] = 'only windows test';
+                        $excl_reasons[] = 'valid for windows';
+                        $excl_reasons[] = 'valid only on windows';
+                        $excl_reasons[] = 'windows platforms only';
+                        $excl_reasons[] = 'windows only test';
+                        $excl_reasons[] = 'windows only';
+                    }
+
+                    if (PHP_INT_SIZE == 8) {
+                        $excl_reasons[] = '32 bit only';
+                        $excl_reasons[] = '32-bit only';
+                        $excl_reasons[] = '32-bit platforms only';
+                        $excl_reasons[] = '32bit windows';
+                        $excl_reasons[] = '32bit only';
+                        $excl_reasons[] = '32bit platform';
+                        $excl_reasons[] = 'machines with 32-bit longs';
+                        $excl_reasons[] = 'running on 64-bit target'; // implies can run on everything else
+                    }
+
+                    foreach ($excl_reasons as $excl_reason) {
+                        if (stripos($skip_reason, $excl_reason) !== false) {
+                            $show_skip_result = false;
+                            break;
+                        }
+                    }
+
+                    // echo "    SKIP $tested $test_file $skip_reason";
+                    // -- end ---
+
+                    if ($show_skip_result) {
+                        show_result('SKIP', $tested, $tested_file, "reason: $m[1]", $temp_filenames);
+                    } else {
+                        // echo "        => $skip_reason\n";
+                    }
+
                 } else {
                     show_result('SKIP', $tested, $tested_file, '', $temp_filenames);
                 }
