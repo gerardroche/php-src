@@ -2202,8 +2202,12 @@ TEST $file
 
                     $excl_reasons = [];
 
+                    # --group-ingore-skip="os"
                     if (PHP_OS == 'Linux') {
+                        $excl_reasons[] = 'windows-only test';
+                        $excl_reasons[] = 'extra warning on windows';
                         $excl_reasons[] = 'for windows platforms';
+                        $excl_reasons[] = 'for windows';
                         $excl_reasons[] = 'not valid for linux'; // implies can run on everything else
                         $excl_reasons[] = 'only for windows';
                         $excl_reasons[] = 'only on windows';
@@ -2213,25 +2217,41 @@ TEST $file
                         $excl_reasons[] = 'only windows test';
                         $excl_reasons[] = 'valid for windows';
                         $excl_reasons[] = 'valid only on windows';
-                        $excl_reasons[] = 'windows platforms only';
                         $excl_reasons[] = 'windows only test';
-                        $excl_reasons[] = 'for windows';
                         $excl_reasons[] = 'windows only';
+                        $excl_reasons[] = 'not valid for non windows';
+                        $excl_reasons[] = 'windows platforms only';
+                        $excl_reasons[] = 'windows-only';
+                        $excl_reasons[] = 'only valid for sun solaris'; // substr(PHP_OS, 0, 3) != 'Sun'
+                        $excl_reasons[] = 'windows-only'; // PHP_OS !== 'Darwin' && false === strpos(PHP_OS, 'BSD')
                     }
 
-                    // only valid for sun solaris
-
+                    # --group-ingore-skip="bit"
                     if (PHP_INT_SIZE == 8) {
                         $excl_reasons[] = '32 bit only';
                         $excl_reasons[] = '32-bit only';
                         $excl_reasons[] = '32-bit platforms only';
-                        $excl_reasons[] = 'system with 32-bit';
-                        $excl_reasons[] = '32bit windows';
-                        $excl_reasons[] = '32bit test only';
                         $excl_reasons[] = '32bit only';
                         $excl_reasons[] = '32bit platform';
+                        $excl_reasons[] = '32bit test only';
+                        $excl_reasons[] = '32bit windows';
                         $excl_reasons[] = 'machines with 32-bit longs';
                         $excl_reasons[] = 'running on 64-bit target'; // implies can run on everything else
+                        $excl_reasons[] = 'system with 32-bit';
+                    }
+
+                    # --group-ingore-skip="mode"
+                    if (!PHP_DEBUG) {
+                        $excl_reasons[] = 'requires debug build';
+                    } else {
+                        $excl_reasons[] = 'not suitable for debug build';
+                    }
+
+                    # --group-ingore-skip="ts"
+                    if (!PHP_ZTS) {
+                        $excl_reasons[] = 'only for zts';
+                    } else {
+                        $excl_reasons[] = 'nts only';
                     }
 
                     foreach ($excl_reasons as $excl_reason) {

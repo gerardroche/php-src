@@ -12,7 +12,8 @@ addons:
       - re2c
       - ccache
       - mysql-server
-      - postgresql
+      - postgresql-10
+      - postgresql-client-10
       - libaspell-dev
       - libbz2-dev
       - libcurl4-gnutls-dev
